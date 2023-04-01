@@ -1,9 +1,5 @@
 package com.driver;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message {
@@ -11,10 +7,11 @@ public class Message {
     private String content;
     private Date timestamp;
 
-    public Message(int id, String content, Date timestamp) {
+    public Message(int id, String content,Date timestamp) {
         this.id = id;
         this.content = content;
-        this.timestamp = new Date();
+        timestamp = new Date();
+        this.timestamp = timestamp;
     }
 
     public int getId() {
