@@ -36,7 +36,7 @@ public class WhatsappRepository {
 //            User user = new User(name, mobileNo);
 //            userMap.put(mobileNo, user);
             userMobile.add(mobileNo);
-            return "User Added Successfully";
+            return "SUCCESS";
          }
 
         return null;
@@ -66,7 +66,7 @@ public class WhatsappRepository {
 
     public int createMessage(String content) {
         messageId++;
-//        Message msg = new Message(messageId, content, new Date());
+        Message msg = new Message(messageId, content, new Date());
 //        messageMap.put(messageId, msg);
         return messageId;
     }
