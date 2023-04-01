@@ -66,8 +66,8 @@ public class WhatsappRepository {
 
     public int createMessage(String content) {
         messageId++;
-        Message msg = new Message(messageId, content, new Date());
-        senderMap.put(msg,null);
+        Message msg = new Message(messageId, content);
+        //senderMap.put(msg,null);
         return messageId;
     }
 
