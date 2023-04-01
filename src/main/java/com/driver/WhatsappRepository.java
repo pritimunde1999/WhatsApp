@@ -16,7 +16,6 @@ public class WhatsappRepository {
     private HashMap<Group, User> adminMap;
     private HashSet<String> userMobile;
 
-    //private HashMap<Integer, Message> messageMap;
     private int customGroupCount;
     private int messageId;
 
@@ -26,7 +25,6 @@ public class WhatsappRepository {
         this.senderMap = new HashMap<Message, User>();
         this.adminMap = new HashMap<Group, User>();
         this.userMobile = new HashSet<>();
-        //this.messageMap = new HashMap<>();
         this.customGroupCount = 1;
         this.messageId = 0;
     }
@@ -54,7 +52,7 @@ public class WhatsappRepository {
         }
 
         if (users.size() > 2) {
-            Group group = new Group("Group" + customGroupCount, users.size());
+            Group group = new Group("Group "+customGroupCount,users.size());
             groupUserMap.put(group, users);
             adminMap.put(group, users.get(0));
             customGroupCount++;
@@ -109,5 +107,75 @@ public class WhatsappRepository {
         }
 
         return "SUCCESS";
+    }
+
+    public int removeUser(User user)
+    {
+        boolean b = false;
+        Group group =null;
+
+        for(Group g : groupUserMap.keySet())
+        {
+            if(groupUserMap.get(g).contains(user))
+            {
+                group = g;
+                b = true;
+                break;
+            }
+        }
+
+        if(b==false) return -1;
+
+        if(b==true)
+        {
+            if(adminMap.containsKey(user))
+            {
+                return -2;
+            }
+        }
+
+        groupUserMap.get(group).remove(user);
+
+        List<Message> list = new ArrayList<>();
+
+        for(Message msg : senderMap.keySet())
+        {
+            if(senderMap.get(msg).equals(user))
+            {
+                list.add(msg);
+            }
+        }
+
+        for(Message msg : list)
+        {
+            groupMessageMap.get(group).remove(msg);
+            senderMap.remove(msg);
+        }
+
+        return group.getNumberOfParticipants() + groupMessageMap.get(group).size() + senderMap.size();
+
+    }
+
+    public String findMessage(Date start, Date end, int K)
+    {
+        int count =0;
+        List<Message> list = new ArrayList<>();
+        for(Message msg : senderMap.keySet())
+        {
+            if(msg.getTimestamp().compareTo(start)>0 && msg.getTimestamp().compareTo(end)<0)
+            {
+                list.add(msg);
+                count++;
+            }
+        }
+
+        if(count < K)
+        {
+            return "K is greater than the number of messages";
+        }
+
+
+       return list.get(count-K).getContent();
+
     }
 }
