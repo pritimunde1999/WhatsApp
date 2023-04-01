@@ -33,7 +33,7 @@ public class WhatsappRepository {
 
     public String createUser(String name, String mobileNo) {
         if (!userMobile.contains(mobileNo)) {
-//            User user = new User(name, mobileNo);
+           User user = new User(name, mobileNo);
 //            userMap.put(mobileNo, user);
             userMobile.add(mobileNo);
             return "SUCCESS";
@@ -67,7 +67,7 @@ public class WhatsappRepository {
     public int createMessage(String content) {
         messageId++;
         Message msg = new Message(messageId, content, new Date());
-//        messageMap.put(messageId, msg);
+        senderMap.put(msg,null);
         return messageId;
     }
 
@@ -108,6 +108,6 @@ public class WhatsappRepository {
             adminMap.put(group, user);
         }
 
-        return "Admin Change Successfully";
+        return "SUCCESS";
     }
 }

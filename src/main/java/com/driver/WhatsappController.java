@@ -30,7 +30,7 @@ public class WhatsappController {
         String res = whatsappService.createUser(name, mobile);
         if(res==null)
         {
-            throw new Exception("Mobile Number Already Created");
+            throw new Exception("User already exists");
         }
         else
         {
